@@ -122,3 +122,56 @@ main button {
     background-color: #3d4a7f;
 }
 
+/* Correct answer - whether selected or not */
+.answer-button.correct-selected{
+    background-color: #94d7a2; /* Green */
+    border-color: #4caf50;
+    color: #1a1a1a;
+}
+.answer-button.correct-not-selected {
+    background-color: #bee3c6; /* Green */
+    border-color: #4caf50;
+    color: #1a1a1a;
+    opacity: 0.7;
+}
+
+/* Incorrectly selected answer */
+.answer-button.incorrect-selected {
+    background-color: #f8bcbc; /* Pink/Red */
+    border-color: #f44336;
+    color: #1a1a1a;
+    opacity: 0.7;
+}
+
+/* Not selected and incorrect */
+.answer-button.not-selected {
+    opacity: 0.5;
+    color: #888;
+}
+
+/* Disabled state */
+.answer-button:disabled {
+    cursor: not-allowed;
+}
+
+.score-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #293264;
+    text-align: center;
+}
+
+.play-again-button {
+    display: block;
+    margin: 30px auto;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    background-color: #4D5B9E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}

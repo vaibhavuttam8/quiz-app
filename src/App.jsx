@@ -8,14 +8,30 @@ function App() {
   
 const [quizData, setQuizData] = useState(null)
 const [startQuiz, setStartQuiz] = useState(false)
+const [loading, setLoading] = useState(true)
 
-useEffect(()=>{
-  const fetchData = async() => {
-    const data = await apiData()
+
+const fetchData = async() => {
+  setLoading(true)
+  const data = await apiData()
+  if (data) {  // Add check to prevent error if data is undefined
     setQuizData(data.results)
   }
-  fetchData()
-}, [])
+  setLoading(false)
+}
+
+
+  useEffect(()=>{
+    const loadData = async() => {
+      setLoading(true)
+      const data = await apiData()
+      if (data) {
+        setQuizData(data.results)
+      }
+      setLoading(false)
+    }
+    loadData()
+  }, [])
 
 function handleStartQuiz(){
   setStartQuiz(true)
@@ -25,10 +41,9 @@ console.log(quizData)
 
   return (
     <>
-
       { !startQuiz &&  <Start handleStartQuiz={handleStartQuiz} /> }
-      { startQuiz && <Questions quizData={quizData}/> }
-   
+      { startQuiz && !loading && <Questions quizData={quizData} onPlayAgain={fetchData}/> }
+      { startQuiz && loading && <div>Loading new questions...</div> }   
     </>
   )
 }

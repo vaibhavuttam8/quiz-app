@@ -1,5 +1,5 @@
 export async function apiData(){
-    const apiUrl = 'https://opentdb.com/api.php?amount=15&difficulty=hard'
+    const apiUrl = 'https://opentdb.com/api.php?amount=10&category=12'
     try {
         const response = await fetch(apiUrl)
         if(!response.ok){
