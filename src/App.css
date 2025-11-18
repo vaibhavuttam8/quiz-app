@@ -56,7 +56,7 @@ main button {
 }
 
 .question-card {
-    background-color: white;
+    background-color: white; 
     padding: 30px;
     margin-bottom: 20px;
     border-radius: 12px;
@@ -95,8 +95,13 @@ main button {
 }
 
 .answer-button.selected {
-    background-color: #D6DBF5;
-    border-color: #D6DBF5;
+    background-color: #D6DBF5 !important;
+    border-color: #657cf0 !important;
+    color: #293264 !important;
+}
+
+.answer-button.selected:hover {
+    background-color: #D6DBF5 !important;
 }
 
 .submit-button {

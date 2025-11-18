@@ -10,44 +10,45 @@ export default function Questions(props) {
         }))
     }
 
-    const quizQuestions = useMemo(() => props.quizData?.map((question, index) => {
-        let answers = []
+    const preparedQuestions = useMemo(() => {
+        if (!props.quizData) return []
 
-        if(question.type === 'multiple') {
-            answers = [
-                question.correct_answer,
-                ...question.incorrect_answers
-            ].sort(() => Math.random() - 0.5) // Shuffle answers
+        const shuffle = answers => {
+            const copy = [...answers]
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1))
+                ;[copy[i], copy[j]] = [copy[j], copy[i]]
+            }
+            return copy
         }
 
-        if(question.type === 'boolean'){
-            answers = [
+        return props.quizData.map(question => ({
+            ...question,
+            answers: shuffle([
                 question.correct_answer,
-                ...question.incorrect_answers
-            ].sort(() => Math.random() - 0.5) // Shuffle answers
-        }
-
-        return (
-            <div key={index} className="question-card">
-                <h2 dangerouslySetInnerHTML={{ __html: question.question }}></h2>
-                <div className="answers-grid">
-                    {answers.map((answer, answerIndex) => (
-                        <button 
-                            key={answerIndex}
-                            className={`answer-button ${selectedAnswers[index] === answer ? 'selected' : ''}`}
-                            onClick={() => handleAnswerClick(index, answer)}
-                            dangerouslySetInnerHTML={{ __html: answer }}
-                        />
-                    ))}
-                </div>
-            </div>
-        )
-    }), [props.quizData])
+                ...(question.incorrect_answers || [])
+            ])
+        }))
+    }, [props.quizData])
 
     return(
         <main>
             <section className="questions-container">
-                {quizQuestions}
+                {preparedQuestions.map((question, index) => (
+                    <div key={index} className="question-card">
+                        <h2 dangerouslySetInnerHTML={{ __html: question.question }}></h2>
+                        <div className="answers-grid">
+                            {question.answers.map((answer, answerIndex) => (
+                                <button 
+                                    key={answerIndex}
+                                    className={`answer-button ${selectedAnswers[index] === answer ? 'selected' : ''}`}
+                                    onClick={() => handleAnswerClick(index, answer)}
+                                    dangerouslySetInnerHTML={{ __html: answer }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                ))}
                 <button className="submit-button">Check Answers</button>
             </section>
         </main>
