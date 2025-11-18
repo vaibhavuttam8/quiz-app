@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 
 export default function Questions(props) {
     const [selectedAnswers, setSelectedAnswers] = useState({})
@@ -10,7 +10,7 @@ export default function Questions(props) {
         }))
     }
 
-    const quizQuestions = props.quizData?.map((question, index) => {
+    const quizQuestions = useMemo(() => props.quizData?.map((question, index) => {
         let answers = []
 
         if(question.type === 'multiple') {
@@ -42,7 +42,7 @@ export default function Questions(props) {
                 </div>
             </div>
         )
-    })
+    }), [props.quizData])
 
     return(
         <main>
